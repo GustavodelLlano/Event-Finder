@@ -14,6 +14,7 @@ Endpoints table
 | POST | `/singup ` | Singup form handler | No |
 | GET | `/events` | Search form render for events | No |
 | POST | `/events` | Search form handler for events | No |
+| GET | `/events/:id/details` | Search form render for events | No |
 | GET | `/events/create` | Create form render for events | Yes |
 | POST | `/events/create` | Create form handle for events | Yes |
 | GET | `/events/:id/edit` | Edit form render for events | Yes |

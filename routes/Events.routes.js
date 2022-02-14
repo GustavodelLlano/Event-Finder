@@ -56,9 +56,6 @@ router.post("/events/:id/delete", (req, res, next) => {
         .catch(err => next(err))
 })
 
-
-
-
 //event search form render
 router.get("/events", (req, res, next) => {
     res.render("events/event-search")
@@ -66,11 +63,22 @@ router.get("/events", (req, res, next) => {
 
 //event search handle
 router.post("/events", (req, res, next) => {
-    const { name  } = req.body
+    const { name } = req.body
 
     Event
         .find({name})
         .then(events =>  res.render("events/event-list", {events}))
+        .catch(err => next(err))
+})
+
+//event details render
+router.get("/events/:id/details",(req, res, next) =>{
+    const eventId = req.params.id
+
+    Event
+    .findById(eventId)
+    .then(event => res.render("events/event-details", {event}))
+    .catch(err => next(err))
 })
 
 
