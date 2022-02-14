@@ -33,19 +33,20 @@ router.get('/login', (req, res, next) => {
 // POST
 router.post('/login', (req, res, next) => {
 
-    const { username, passwordHash } = req.body
+    const { email, userPsw } = req.body
 
     User
-        .findOne({ username })
+        .findOne({ email })
         .then(user => {
             if (!user) {
                 res.render('auth/login-form', { errMsg: 'This username is not registered' })
                 return
-            } else if (!bcryptjs.compareSync(passwordHash, user.passwordHash)) {
+            } else if (!bcrypt.compareSync(userPsw, user.passwordHash)) {
                 res.render('auth/login-form', { errMsg: 'Incorrect password' })
                 return
             } else {
                 req.session.currentUser = user
+                req.app.locals.user = user
                 res.redirect('user/user-profile')
             }
         })
