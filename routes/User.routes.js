@@ -23,7 +23,7 @@ router.post('/singup', (req, res) => {
 
 
 // Each user route
-router.get('/user/:id', isLoggedIn, (req, res, next) => {
+router.get('/user/:userId', isLoggedIn, (req, res, next) => {
 
     const { userId } = req.params
 
@@ -36,7 +36,7 @@ router.get('/user/:id', isLoggedIn, (req, res, next) => {
 })
 
 // User edit form render
-router.get('/user/:id/edit', isLoggedIn, isSameUser, (req, res, next) => {
+router.get('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
 
     const { userId } = req.params
 
@@ -49,7 +49,7 @@ router.get('/user/:id/edit', isLoggedIn, isSameUser, (req, res, next) => {
 })
 
 // User edit form handler
-router.post('/user/:id/edit', isLoggedIn, isSameUser, (req, res, next) => {
+router.post('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
 
     const { userId } = req.params
     const { username, email, passwordHash, profileImg, description } = req.body
@@ -64,22 +64,23 @@ router.post('/user/:id/edit', isLoggedIn, isSameUser, (req, res, next) => {
 
 // Show user friends
 
-router.get('/user/:id/friends', isLoggedIn, (req, res, next) => {
+router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
 
     const { userId } = req.params
+    console.log(req.params)
 
     User
         .findById(userId)
-        .populate('user')
+        .populate('friends')
         .then(friends => {
-            res.render('vista de amigos', { friends })
+            res.render('user/user-friends', { friends })
         })
         .catch(err => next(err))
 })
 
 // Delete user
 
-router.post('/user/:id/delete', isLoggedIn, isAdmin, (req, res, next) => {
+router.post('/user/:userId/delete', isLoggedIn, isAdmin, (req, res, next) => {
     const { userId } = req.params
 
     User
