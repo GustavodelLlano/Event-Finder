@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <h2>Edit user</h2>
+
+            <br>
+            <br>
+
+            <form action="/user/{{id}}/user-edit" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" value="{{username}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" value="{{email}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Profile image</label>
+                    <input type="text" class="form-control" name="profileImg" value="{{profileImg}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <input type="textarea" class="form-control" name="description" value="{{description}}">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update!</button>
+            </form>
+
+            <form action="/user/{{id}}/user-delete">
+                <button type="submit" class="btn btn-primary">Delete this user</button>
+            </form>
+
+        </div>
+    </div>
+</div>

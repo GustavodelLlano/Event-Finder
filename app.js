@@ -15,9 +15,7 @@ const projectName = "myapp";
 app.locals.appTitle = projectName
 
 
-const indexRoutes = require("./routes/index");
-app.use("/", indexRoutes);
-
+require("./routes")(app)
 
 
 require("./error-handling")(app);

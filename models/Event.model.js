@@ -2,25 +2,24 @@ const { Schema, model } = require("mongoose");
 
 const eventSchema = new Schema(
     {
-        name: {
+        eventName: {
             type: String,
-            unique: true,
             required: [true, 'You need to introduce event name']
         },
         type: {
             type: String,
-            require: [true, 'You need to introduce the type of the event']
+            required: [true, 'You need to introduce the type of the event']
         },
         url: {
             type: String,
             unique: true,
-            require: [true, 'You need to introduce the url of the event']
+            required: [true, 'You need to introduce the url of the event']
         },
-        img: {
+        eventImg: {
             type: String
         },
         date: {
-            type: String
+            type: Date
         },
         genre: {
             type: String

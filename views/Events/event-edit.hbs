@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <h2>Edit Event</h2>
+
+            <br>
+
+            <form action="/events/{{id}}/edit" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Event name</label>
+                    <input type="text" class="form-control" name="eventname" value="{{eventname}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Event type</label>
+                    <input type="text" class="form-control" name="type" value="{{type}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Event image</label>
+                    <input type="text" class="form-control" name="eventImg" value="{{eventImg}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" name="date" value="{{date}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Genre</label>
+                    <input type="text" class="form-control" name="genre" value="{{genre}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ticket min price</label>
+                    <input type="number" class="form-control" name="minPrice" value="{{minPrice}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ticket max price</label>
+                    <input type="number" class="form-control" name="maxPrice" value="{{maxPrice}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Latitude</label>
+                    <input type="text" class="form-control" name="lat" value="{{lat}}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Longitude</label>
+                    <input type="text" class="form-control" name="lng" value="{{lng}}">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Edit event!</button>
+            </form>
+
+            <form action="/events/{{id}}/delete">
+                <button type="submit" class="btn btn-primary">Delete this event</button>
+            </form>
+
+        </div>
+    </div>
+</div>

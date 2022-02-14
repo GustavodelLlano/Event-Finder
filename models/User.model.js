@@ -29,18 +29,31 @@ const userSchema = new Schema(
       enum: ["USER", "ARTIST", "ADMIN"],
       default: 'USER'
     },
-    wishList: [{
+    friends: [{
       type: Schema.Types.ObjectId,
-      ref: 'Event'
+      ref: 'User'
     }],
-    artistList: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Event'
-    }],
-    attendedList: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Event'
-    }],
+    wishEvents: {
+      apiEvents: [String],
+      internalEvents: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Event'
+      }]
+    },
+    artistEvents: {
+      apiEvents: [String],
+      internalEvents: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Event'
+      }]
+    },
+    attendedEvents: {
+      apiEvents: [String],
+      internalEvents: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Event'
+      }]
+    }
   },
   {
     timestamps: true,
