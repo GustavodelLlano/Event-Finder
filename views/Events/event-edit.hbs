@@ -10,7 +10,7 @@
             <form action="/events/{{id}}/edit" method="POST">
                 <div class="mb-3">
                     <label class="form-label">Event name</label>
-                    <input type="text" class="form-control" name="eventname" value="{{eventname}}">
+                    <input type="text" class="form-control" name="eventName" value="{{eventName}}">
                 </div>
 
                 <div class="mb-3">
@@ -45,12 +45,12 @@
 
                 <div class="mb-3">
                     <label class="form-label">Latitude</label>
-                    <input type="text" class="form-control" name="lat" value="{{lat}}">
+                    <input type="text" class="form-control" name="lat" value="{{location.coordinates.[0]}}">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Longitude</label>
-                    <input type="text" class="form-control" name="lng" value="{{lng}}">
+                    <input type="text" class="form-control" name="lng" value="{{location.coordinates.[1]}}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Edit event!</button>

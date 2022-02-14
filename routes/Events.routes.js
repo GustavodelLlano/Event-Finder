@@ -3,11 +3,12 @@ const Event = require("../models/Event.model")
 
 //create event RENDER
 router.get("/events/create", (req, res, next) => {
-    res.render("/Events/event-create")
+    
+    res.render("events/event-create")
 })
 //create event HANDLE
 router.post("/events/create", (req, res, next) => {
-    const { eventname, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
+    const { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
         type: "Point",
@@ -15,24 +16,24 @@ router.post("/events/create", (req, res, next) => {
     }
 
     Event
-        .create({ eventname, type, url, eventImg, date, genre, minPrice, maxPrice, location })
+        .create({ eventName, type, url, eventImg, date, genre, minPrice, maxPrice, location })
         .then(() => res.redirect("/events"))
         .catch(err => next(err))
 })
 
 //update event RENDER
-router.get("/events/:id/update", (req, res, next) => {
+router.get("/events/:id/edit", (req, res, next) => {
     const eventId = req.params.id
 
     Event
         .findById(eventId)
-        .then(event => res.render("Events/event-edit", event))
+        .then(event => res.render("events/event-edit", event))
         .catch(err => next(err))
 })
 
 //HANDLE
-router.post("/events/:id/update", (req, res, next) => {
-    const { eventname, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
+router.post("/events/:id/edit", (req, res, next) => {
+    const { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
         type: "Point",
@@ -40,8 +41,8 @@ router.post("/events/:id/update", (req, res, next) => {
     }
 
     const eventId = req.params.id
-    Place
-        .findByIdAndUpdate(eventId, { eventname, type, url, eventImg, date, genre, minPrice, maxPrice, location }, { new: true })
+    Event
+        .findByIdAndUpdate(eventId, { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, location }, { new: true })
         .then(() => res.redirect("/events"))
         .catch(err => next(err))
 })
@@ -58,19 +59,19 @@ router.post("/events/:id/delete", (req, res, next) => {
 
 
 
-// //event search form render
-// router.get("/events", (req, res, next) => {
-//     res.render("search form")
-// })
+//event search form render
+router.get("/events", (req, res, next) => {
+    res.render("events/event-search")
+})
 
-// //event search handle
-// router.post("/events", (req, res, next) => {
-//     const { name, type, url, img, date, genre, minPrice, maxPrice, location } = req.body
+//event search handle
+router.post("/events", (req, res, next) => {
+    const { name  } = req.body
 
-//     Event
-//         .find()
-//         .then(events => res.render("/events/list", events))
-// })
+    Event
+        .find({name})
+        .then(events =>  res.render("events/event-list", {events}))
+})
 
 
 
