@@ -25,14 +25,14 @@ router.post('/singup', (req, res) => {
 // Each user route
 router.get('/user/:userId', isLoggedIn, (req, res, next) => {
 
-    const { userId } = req.params
-
-    User
-        .findById(userId)
-        .then(() => {
-            res.render('user/user-profile')
-        })
-        .catch(err => next(err))
+    const { userId } = req.session.currentUser
+    console.log(userId)
+    // User
+    //     .findById(userId)
+    //     .then(() => {
+    //         res.send(userId) //es.render('user/user-profile', { user: req.session.currentUser })
+    //     })
+    //     .catch(err => next(err))
 })
 
 // User edit form render
@@ -77,6 +77,23 @@ router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
         })
         .catch(err => next(err))
 })
+
+// User search
+
+// User search form render
+router.get("/users", (req, res, next) => {
+    res.render("user/user-search")
+})
+
+// User search handle
+router.post("/users", (req, res, next) => {
+    const { username } = req.body
+
+    User
+        .find({ username })
+        .then(users => res.render("user/user-list", { users }))
+})
+
 
 // Delete user
 
