@@ -9,7 +9,11 @@
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text">Date: {{date}}</p>
                     <a href="/events/{{_id}}/details" class="btn btn-primary">Event details</a>
-                    <a href="/events/{{_id}}/add" class="btn btn-primary">Add event to your wishlist</a>
+
+                    <form action="/events/{{_id}}/add" method="post">
+                        <button class="btn btn-primary">Add to my event wishlist</button>
+                    </form>
+
                 </div>
             </div>
         </div>

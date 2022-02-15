@@ -75,7 +75,6 @@ router.post('/user/:userId/add', isLoggedIn, (req, res, next) => {
 
 
 
-
 // User search
 
 // User search form render
