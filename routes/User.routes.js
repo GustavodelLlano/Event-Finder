@@ -3,24 +3,6 @@ const User = require('../models/User.model')
 const { isLoggedIn, checkRole } = require("../middleware/route-guard")
 const { isUser, isArtist, isAdmin, isSameUser } = require("../utils")
 
-// Create user
-router.get('/singup', (req, res) => {
-    User
-        .find()
-        .then(users => res.render('user/user-create', { users }))
-        .catch(err => next(err))
-})
-
-router.post('/singup', (req, res) => {
-
-    const { username, email, passwordHash, profileImg, description } = req.body
-
-    User
-        .create({ username, email, passwordHash, profileImg, description })
-        .then(() => res.redirect('user/user-create'))
-        .catch(err => next(err))
-})
-
 
 // Each user route
 router.get('/user/:userId', isLoggedIn, (req, res, next) => {

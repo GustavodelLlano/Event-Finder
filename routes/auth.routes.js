@@ -12,11 +12,11 @@ router.get("/signup", (req, res, next) => {
 
 // POST
 router.post("/signup", (req, res, next) => {
-    const { passwordHash } = req.body
+    const { userPsw } = req.body
 
     bcrypt
         .genSalt(saltRounds)
-        .then(salt => bcrypt.hash(passwordHash, salt))
+        .then(salt => bcrypt.hash(userPsw, salt))
         .then(hashedPassword => User.create({ ...req.body, passwordHash: hashedPassword }))
         .then(() => res.redirect('/'))
         .catch(error => next(error))
