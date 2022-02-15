@@ -4,17 +4,23 @@
     <div class="card" style="width: 35rem;">
         <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">{{name}}</h5>
+            <h5 class="card-title" id="enventName">{{name}}</h5>
             <p class="card-text">{{type}}</p>
             <a href="{{url}}" class="card-text">Buy tickets here</a>
             <p class="card-text">Date: {{date}}</p>
             <p class="card-text">{{genre}}</p>
             <p class="card-text">Min price: {{minPrice}}</p>
             <p class="card-text">Max price: {{maxPrice}}</p>
-            <p class="card-text">{{location.coordinates}}</p>
+            <p class="card-text" id="lat">{{location.coordinates.[0]}}</p>
+            <p class="card-text" id="lng">{{location.coordinates.[1]}}</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
-    {{/with}}
-
+    <figure id="myMap"></figure>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/event-map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIu-FQoeSKpEXF9iD-j1xGJRMn0jGOvPw
+&callback=initMap"></script>
+{{/with}}

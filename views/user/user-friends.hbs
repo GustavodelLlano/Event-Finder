@@ -1,6 +1,11 @@
-<h1>Here's your friends</h1>
-{{#each friends}}
-<ul>
-    <li>{{username}}</li>
-</ul>
-{{/each}}
+<div class="container">
+    <h1>Your friends</h1>
+    {{#each friends}}
+    <div class="card" style="width: 35rem;">
+        <img class="card-img-top" src="{{profileImg}}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{username}}</h5>
+        </div>
+    </div>
+    {{/each}}
+</div>
