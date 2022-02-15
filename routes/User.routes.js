@@ -51,24 +51,27 @@ router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
     User
         .findById(userId)
         .populate('friends')
-        .then(friends => {
-            res.render('user/user-friends', { friends })
+        .then(user => {
+            res.render('user/user-friends', { user })
         })
         .catch(err => next(err))
 })
 
-// Add to my friends
+// Add to my friends                   NO FUNCHIONA  $push
 
 router.post('/user/:userId/add', isLoggedIn, (req, res, next) => {
 
-    const { userId } = req.params
-    const { friends } = req.body
+    const { userId } = req.session.currentUser._id
+    const { friendId } = req.params
+
+    console.log('FRIENDS', req.params)
+    console.log('YO', req.session.currentUser._i)
 
     User
-        .findByIdAndUpdate(userId, { friends }, { new: true })
+        .findByIdAndUpdate(userId, friendId, { new: true })
         .then(user => {
             req.session.currentUser.friends.push(user)
-            res.redirect(`/user/${userId}/friends`)
+            res.render('user/user-friends', { user }, friends)
         })
         .catch(err => next(err))
 })

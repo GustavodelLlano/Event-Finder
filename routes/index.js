@@ -15,4 +15,8 @@ module.exports = app => {
   // Auth routes
   const authRouter = require("./auth.routes")
   app.use("/", authRouter)
+
+  // Map routes
+  const apiRouter = require('./api.routes')
+  app.use('/', apiRouter)
 }
