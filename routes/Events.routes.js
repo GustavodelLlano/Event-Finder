@@ -1,11 +1,10 @@
 const router = require("express").Router()
 const Event = require("../models/Event.model")
+const User = require('../models/User.model')
 
 //create event RENDER
-router.get("/events/create", (req, res, next) => {
-    
-    res.render("events/event-create")
-})
+router.get("/events/create", (req, res, next) =>  res.render("events/event-create"))
+
 //create event HANDLE
 router.post("/events/create", (req, res, next) => {
     const { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
@@ -22,7 +21,7 @@ router.post("/events/create", (req, res, next) => {
 })
 
 //update event RENDER
-router.get("/events/:id/edit", (req, res, next) => {
+router.get("/events/:eventId/edit", (req, res, next) => {
     const eventId = req.params.id
 
     Event
@@ -32,7 +31,7 @@ router.get("/events/:id/edit", (req, res, next) => {
 })
 
 //HANDLE
-router.post("/events/:id/edit", (req, res, next) => {
+router.post("/events/:eventId/edit", (req, res, next) => {
     const { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
@@ -48,7 +47,7 @@ router.post("/events/:id/edit", (req, res, next) => {
 })
 
 //Delete
-router.post("/events/:id/delete", (req, res, next) => {
+router.post("/events/:eventId/delete", (req, res, next) => {
     const eventId = req.params.id
     Event
         .findByIdAndDelete(eventId)
@@ -73,16 +72,28 @@ router.post("/events", (req, res, next) => {
 
 //event details render
 router.get("/events/:id/details",(req, res, next) =>{
-    const eventId = req.params.id
+    const id = req.params.id
 
     Event
-    .findById(eventId)
-    .then(event => res.render("events/event-details", {event}))
+    .findById(id)
+    .then(event =>  res.render("events/event-details", {event}))
     .catch(err => next(err))
 })
 
 
+router.post("/events/:id/add", (req, res, next) =>{
+    const id = req.params.id
 
-
+    Event
+    .findById(id)
+    .then((event)=> {
+        User 
+        .findByIdAndUpdate(req.session.currentUser._id )
+        .populate("wishEvents.apiEvents")
+        .then(user => user.wishEvents.internalEvents.push(event))
+        .catch(err => next(err))
+    })
+    .catch(err => next(err))
+})
 
 module.exports = router
