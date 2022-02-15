@@ -46,7 +46,7 @@ router.post('/login', (req, res, next) => {
                 return
             } else {
                 req.session.currentUser = user
-                req.app.locals.user = user
+                req.app.locals.myUser = user
                 res.redirect(`user/${user._id}`)
             }
         })

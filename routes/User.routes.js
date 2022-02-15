@@ -1,20 +1,18 @@
 const router = require("express").Router()
 const User = require('../models/User.model')
-const { isLoggedIn, checkRole } = require("../middleware/route-guard")
-const { isUser, isArtist, isAdmin, isSameUser } = require("../utils")
+const { isLoggedIn, checkRole, isSameUser } = require("../middleware/route-guard")
+const { isUser, isArtist, isAdmin } = require("../utils")
 
 
 // Each user route
 router.get('/user/:userId', isLoggedIn, (req, res, next) => {
 
-    const { userId } = req.session.currentUser
-    console.log(userId)
-    // User
-    //     .findById(userId)
-    //     .then(() => {
-    //         res.send(userId) //es.render('user/user-profile', { user: req.session.currentUser })
-    //     })
-    //     .catch(err => next(err))
+    const { userId } = req.params
+
+    User
+        .findById(userId)
+        .then(user => res.render('user/user-profile', user))
+        .catch(err => next(err))
 })
 
 // User edit form render
@@ -25,7 +23,7 @@ router.get('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
     User
         .findById(userId)
         .then(user => {
-            res.render('user/user-edit', { user })
+            res.render('user/user-edit', user)
         })
         .catch(err => next(err))
 })
@@ -74,6 +72,7 @@ router.post("/users", (req, res, next) => {
     User
         .find({ username })
         .then(users => res.render("user/user-list", { users }))
+        .catch(err => next(err))
 })
 
 
