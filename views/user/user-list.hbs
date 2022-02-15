@@ -1,11 +1,19 @@
 <div class="container">
     <h2>All users</h2>
-    <ul>
-        {{#each users}}
-        <li>
-            <h3>{{username}}</h3>
-            <a href=""></a>
-        </li>
+    <div class="row">
+        {{#each filteredUsers}}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{profileImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{username}}</h5>
+
+                    <form action="/user/{{_id}}/add" method="POST">
+                        <button class="btn btn-primary">Add to my friends</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         {{/each}}
-    </ul>
+    </div>
 </div>

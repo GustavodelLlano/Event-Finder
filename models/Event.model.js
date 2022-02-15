@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const eventSchema = new Schema(
     {
-        eventName: {
+        name: {
             type: String,
             required: [true, 'You need to introduce event name']
         },

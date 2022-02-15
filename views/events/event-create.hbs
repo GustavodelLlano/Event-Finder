@@ -3,61 +3,64 @@
 
         <div class="col-md-8">
 
-            <h2>Edit Event</h2>
+            <h2>Create Event</h2>
 
             <br>
 
-            <form action="/events/{{id}}/edit" method="POST">
+            <form action="/events/create" method="POST">
                 <div class="mb-3">
                     <label class="form-label">Event name</label>
-                    <input type="text" class="form-control" name="name" value="{{eventName}}">
+                    <input type="text" class="form-control" name="name">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Event type</label>
-                    <input type="text" class="form-control" name="type" value="{{type}}">
+                    <input type="text" class="form-control" name="type">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Event tickets url</label>
+                    <input type="text" class="form-control" name="url">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Event image</label>
-                    <input type="text" class="form-control" name="eventImg" value="{{eventImg}}">
+                    <input type="text" class="form-control" name="eventImg">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Date</label>
-                    <input type="date" class="form-control" name="date" value="{{date}}">
+                    <input type="date" class="form-control" name="date">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Genre</label>
-                    <input type="text" class="form-control" name="genre" value="{{genre}}">
+                    <input type="text" class="form-control" name="genre">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Ticket min price</label>
-                    <input type="number" class="form-control" name="minPrice" value="{{minPrice}}">
+                    <input type="number" class="form-control" name="minPrice">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Ticket max price</label>
-                    <input type="number" class="form-control" name="maxPrice" value="{{maxPrice}}">
+                    <input type="number" class="form-control" name="maxPrice">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Latitude</label>
-                    <input type="text" class="form-control" name="lat" value="{{location.coordinates.[0]}}">
+                    <input type="text" class="form-control" name="lat">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Longitude</label>
-                    <input type="text" class="form-control" name="lng" value="{{location.coordinates.[1]}}">
+                    <input type="text" class="form-control" name="lng">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Edit event!</button>
-            </form>
 
-            <form action="/events/{{id}}/delete">
-                <button type="submit" class="btn btn-primary">Delete this event</button>
+
+                <button type="submit" class="btn btn-primary">Create event!</button>
             </form>
 
         </div>

@@ -31,10 +31,12 @@
 
                 <button type="submit" class="btn btn-primary">Update!</button>
             </form>
+            <div class="mb-3">
+                <form action="/user/{{id}}/user-delete" method="POST">
+                    <button type="submit" class="btn btn-primary">Delete this user</button>
+                </form>
 
-            <form action="/user/{{id}}/user-delete">
-                <button type="submit" class="btn btn-primary">Delete this user</button>
-            </form>
+            </div>
 
         </div>
     </div>

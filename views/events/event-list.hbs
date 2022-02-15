@@ -1,12 +1,12 @@
 <div class="container">
     <h2>All events</h2>
     <div class="row">
-        {{#each events}}
+        {{#each filteredEvents}}
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">{{eventName}}</h5>
+                    <h5 class="card-title">{{name}}</h5>
                     <p class="card-text">Date: {{date}}</p>
                     <a href="/events/{{_id}}/details" class="btn btn-primary">Event details</a>
                 </div>

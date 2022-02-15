@@ -47,7 +47,6 @@ router.post('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
 router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
 
     const { userId } = req.params
-    console.log(req.params)
 
     User
         .findById(userId)
@@ -57,6 +56,25 @@ router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
         })
         .catch(err => next(err))
 })
+
+// Add to my friends
+
+router.post('/user/:userId/add', isLoggedIn, (req, res, next) => {
+
+    const { userId } = req.params
+    const { friends } = req.body
+
+    User
+        .findByIdAndUpdate(userId, { friends }, { new: true })
+        .then(user => {
+            req.session.currentUser.friends.push(user)
+            res.redirect(`/user/${userId}/friends`)
+        })
+        .catch(err => next(err))
+})
+
+
+
 
 // User search
 
@@ -70,8 +88,13 @@ router.post("/users", (req, res, next) => {
     const { username } = req.body
 
     User
-        .find({ username })
-        .then(users => res.render("user/user-list", { users }))
+        .find()
+        .then(allUsers => {
+            const filteredUsers = allUsers.filter(user => {
+                return user.username.toLowerCase().includes(username)
+            })
+            res.render("user/user-list", { filteredUsers })
+        })
         .catch(err => next(err))
 })
 

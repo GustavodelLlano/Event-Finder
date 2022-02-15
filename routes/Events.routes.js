@@ -3,12 +3,12 @@ const Event = require("../models/Event.model")
 
 //create event RENDER
 router.get("/events/create", (req, res, next) => {
-    
+
     res.render("events/event-create")
 })
 //create event HANDLE
 router.post("/events/create", (req, res, next) => {
-    const { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
+    const { name, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
         type: "Point",
@@ -16,7 +16,7 @@ router.post("/events/create", (req, res, next) => {
     }
 
     Event
-        .create({ eventName, type, url, eventImg, date, genre, minPrice, maxPrice, location })
+        .create({ name, type, url, eventImg, date, genre, minPrice, maxPrice, location })
         .then(() => res.redirect("/events"))
         .catch(err => next(err))
 })
@@ -33,7 +33,7 @@ router.get("/events/:id/edit", (req, res, next) => {
 
 //HANDLE
 router.post("/events/:id/edit", (req, res, next) => {
-    const { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
+    const { name, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
         type: "Point",
@@ -42,7 +42,7 @@ router.post("/events/:id/edit", (req, res, next) => {
 
     const eventId = req.params.id
     Event
-        .findByIdAndUpdate(eventId, { eventName, type, url, eventImg, date, genre, minPrice, maxPrice, location }, { new: true })
+        .findByIdAndUpdate(eventId, { name, type, url, eventImg, date, genre, minPrice, maxPrice, location }, { new: true })
         .then(() => res.redirect("/events"))
         .catch(err => next(err))
 })
@@ -66,19 +66,24 @@ router.post("/events", (req, res, next) => {
     const { name } = req.body
 
     Event
-        .find({name})
-        .then(events =>  res.render("events/event-list", {events}))
+        .find()
+        .then(allEvents => {
+            const filteredEvents = allEvents.filter(event => {
+                return event.name.toLowerCase().includes(name)
+            })
+            res.render("events/event-list", { filteredEvents })
+        })
         .catch(err => next(err))
 })
 
 //event details render
-router.get("/events/:id/details",(req, res, next) =>{
+router.get("/events/:id/details", (req, res, next) => {
     const eventId = req.params.id
 
     Event
-    .findById(eventId)
-    .then(event => res.render("events/event-details", {event}))
-    .catch(err => next(err))
+        .findById(eventId)
+        .then(event => res.render("events/event-details", { event }))
+        .catch(err => next(err))
 })
 
 

@@ -1,9 +1,15 @@
-<h1>My profile</h1>
-
-<img src="{{profileImg}}" alt="Profile Image">
-{{username}}
-
-
-<a href="/user/{{_id}}/edit">
-    <button class="btn btn-primary">Edit my profile</button>
-</a>
+<div class="container">
+    <h2>My profile</h2>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{profileImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{username}}</h5>
+                    <p class="card-text">{{description}}</p>
+                    <a href="/user/{{_id}}/edit" class="btn btn-primary">Edit my profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
