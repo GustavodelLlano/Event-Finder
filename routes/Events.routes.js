@@ -2,6 +2,8 @@ const router = require("express").Router()
 const { updateOne } = require("../models/Event.model")
 const Event = require("../models/Event.model")
 const User = require('../models/User.model')
+const { isUser, isArtist, isAdmin , isSameUserr} = require("../utils")
+
 
 //create event RENDER
 router.get("/events/create", (req, res, next) => {
@@ -25,8 +27,8 @@ router.post("/events/create", (req, res, next) => {
 
 //update event RENDER
 router.get("/events/:eventId/edit", (req, res, next) => {
-    const eventId = req.params.id
-
+    const {eventId} = req.params
+    
     Event
         .findById(eventId)
         .then(event => res.render("events/event-edit", event))
@@ -51,7 +53,7 @@ router.post("/events/:id/edit", (req, res, next) => {
 
 //Delete
 router.post("/events/:eventId/delete", (req, res, next) => {
-    const eventId = req.params.id
+    const {eventId} = req.params
     Event
         .findByIdAndDelete(eventId)
         .then(() => res.redirect("/events"))

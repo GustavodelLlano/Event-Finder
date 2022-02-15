@@ -8,7 +8,7 @@ const isAdmin = user => user.role === "ADMIN"
 
 const isNotLogged = user => user.role !== "USER" || "ARTIST" || "ADMIN"
 
-const isSameUser = (userId, currentUserId) => userId === currentUserId
+const isSameUserr = (userId, currentUserId) => userId === currentUserId
 
 
-module.exports = { isUser, isArtist, isAdmin, isSameUser, isNotLogged }
+module.exports = { isUser, isArtist, isAdmin, isSameUserr, isNotLogged }
