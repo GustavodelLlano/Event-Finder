@@ -8,7 +8,7 @@
             <br>
             <br>
 
-            <form action="/user/{{id}}/user-edit" method="POST">
+            <form action="/user/{{id}}/edit" method="POST">
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="name" value="{{username}}">
@@ -29,11 +29,19 @@
                     <input type="textarea" class="form-control" name="description" value="{{description}}">
                 </div>
 
+                <div class="mb-3">
+                    <label for="roleInput" class="form-label">Change role</label>
+                    <select name="role">
+                        <option value="USER">User</option>
+                        <option value="ARTIST">Artist</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Update!</button>
             </form>
             <div class="mb-3">
                 <form action="/user/{{id}}/user-delete" method="POST">
-                    <button type="submit" class="btn btn-primary">Delete this user</button>
+                    <button type="submit" class="btn btn-danger">Delete this user</button>
                 </form>
 
             </div>

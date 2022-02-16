@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const User = require('../models/User.model')
 const { isLoggedIn, checkRole, isSameUser } = require("../middleware/route-guard")
-const { isUser, isArtist, isAdmin } = require("../utils")
+const { isUser, isArtist, isAdmin , isSameUserr} = require("../utils")
 
 
 // Each user route
@@ -32,10 +32,10 @@ router.get('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
 router.post('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
 
     const { userId } = req.params
-    const { username, email, passwordHash, profileImg, description } = req.body
+    const { username, email, passwordHash, profileImg, description, role } = req.body
 
     User
-        .findByIdAndUpdate(userId, { username, email, passwordHash, profileImg, description }, { new: true })
+        .findByIdAndUpdate(userId, { username, email, passwordHash, profileImg, description, role }, { new: true })
         .then(updateUser => {
             res.render('user/user-edit', { updateUser })
         })
