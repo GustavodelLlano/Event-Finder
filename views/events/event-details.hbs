@@ -11,15 +11,15 @@
             <p class="card-text">{{genre}}</p>
             <p class="card-text">Min price: {{minPrice}}</p>
             <p class="card-text">Max price: {{maxPrice}}</p>
-            <p class="card-text" id="lat">{{location.coordinates.[0]}}</p>
-            <p class="card-text" id="lng">{{location.coordinates.[1]}}</p>
+            <p hidden class="card-text" id="lat">{{location.coordinates.[0]}}</p>
+            <p hidden class="card-text" id="lng">{{location.coordinates.[1]}}</p>
 
             <a href="/events/{{_id}}/edit" class="btn btn-primary">Edit me</a>
-            
+
             <form action="/events/{{_id}}/delete" method="post">
                 <button class="btn btn-danger">Delete event</button>
             </form>
-            
+
         </div>
     </div>
     <figure id="myMap"></figure>

@@ -31,7 +31,8 @@ const userSchema = new Schema(
     },
     friends: [{
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      unique: true
     }],
     wishEvents: {
       apiEvents: [String],

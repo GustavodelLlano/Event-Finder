@@ -1,7 +1,8 @@
 const router = require("express").Router()
 const User = require('../models/User.model')
 const { isLoggedIn, checkRole, isSameUser } = require("../middleware/route-guard")
-const { isUser, isArtist, isAdmin , isSameUserr} = require("../utils")
+const { isUser, isArtist, isAdmin, isSameUserr } = require("../utils")
+const { updateOne } = require("../models/User.model")
 
 
 // Each user route
@@ -57,25 +58,59 @@ router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
         .catch(err => next(err))
 })
 
-// Add to my friends                   NO FUNCHIONA  $push
+// Add to my friends 
 
-router.post('/user/:userId/add', isLoggedIn, (req, res, next) => {
+router.post('/user/:friendId/add-friend', isLoggedIn, (req, res, next) => {
 
-    const { userId } = req.session.currentUser._id
+    const myUser = req.session.currentUser
+    const userId = req.session.currentUser._id
     const { friendId } = req.params
+    // const { friends } = req.session.currentUser.friends
 
-    console.log('FRIENDS', req.params)
-    console.log('YO', req.session.currentUser._i)
+    // console.log('LO QUE NO DESESTRUCTURAMOS:', req.session.currentUser._id)
+    // console.log('LO QUE SÍ DESESTRUCTURAMOS:', req.params
 
-    User
-        .findByIdAndUpdate(userId, friendId, { new: true })
-        .then(user => {
-            req.session.currentUser.friends.push(user)
-            res.render('user/user-friends', { user }, friends)
-        })
-        .catch(err => next(err))
+    if (!myUser.friends.includes(friendId.toString())) {
+        User
+            .findByIdAndUpdate(userId, { $push: { friends: friendId } }, { new: true })
+            .then(user => {
+                req.session.currentUser = user
+                res.redirect(`/user/${userId}/friends`)
+            })
+            .catch(err => next(err))
+    } else {
+        res.redirect(`/user/${userId}/friends`)      // la vista solo funciona cuando ya son amigos
+    }
+
 })
 
+// Add to wishEvents
+router.post('/user/:eventId/add-event', isLoggedIn, (req, res, next) => {
+
+    const myUser = req.session.currentUser
+    const userId = req.session.currentUser._id
+    const { eventId } = req.params
+
+    console.log('MY USER:', myUser)
+    console.log('USER ID:', userId)
+    console.log('EVENT ID', eventId)
+
+    if (!myUser.wishEvents[1].includes(eventId.toString())) {
+        User
+            .findByIdAndUpdate(eventId, { $push: { wishEvents: eventId } }, { new: true })
+            .then(user => {
+                user = req.session.currentUser
+                res.render('events/event-list', { user })
+            })
+            .catch(err => next(err))
+    } else {
+        res.redirect(`/user/${userId}`)
+    }
+
+})
+
+// Add to artistEvents
+// Add to attendedEvents
 
 
 // User search
