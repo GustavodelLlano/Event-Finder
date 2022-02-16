@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Event details</h1>
     {{#with event}}
-    <div class="card" style="width: 35rem;">
+    <div class="card" style="width: 45rem;">
         <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title" id="enventName">{{name}}</h5>
@@ -21,12 +21,11 @@
             </form>
             
         </div>
+        <figure id="myMap"></figure>
     </div>
-    <figure id="myMap"></figure>
+    {{/with}}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/event-map.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIu-FQoeSKpEXF9iD-j1xGJRMn0jGOvPw
-&callback=initMap"></script>
-{{/with}}
+<script src="https://maps.googleapis.com/maps/api/js?key={{mapsKey}}&callback=initMap"></script>
