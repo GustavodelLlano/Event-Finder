@@ -11,9 +11,13 @@ const app = express();
 require("./config")(app);
 require('./config/session.config')(app)
 
+
 const projectName = "myapp";
 
 app.locals.appTitle = projectName
+app.locals.mapsKey = process.env.MAPKEY
+app.locals.ticketKey = process.env.TICKETKEY
+
 
 
 require("./routes")(app)
