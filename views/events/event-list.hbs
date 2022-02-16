@@ -1,14 +1,19 @@
 <div class="container">
     <h2>All events</h2>
     <div class="row">
-        {{#each filteredEvents}}
+        {{#each allEvents}}
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text">Date: {{date}}</p>
+
+                    {{#if isFromApi}}
+                    <a href="/events/{{_id}}/details?api=true" class="btn btn-primary">Event details</a>
+                    {{else}}
                     <a href="/events/{{_id}}/details" class="btn btn-primary">Event details</a>
+                    {{/if}}
 
                     <form action="/user/{{_id}}/add-event" method="post">
                         <button class="btn btn-primary">Add to my event wishlist</button>
