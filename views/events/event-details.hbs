@@ -24,6 +24,26 @@
         <figure id="myMap"></figure>
     </div>
     {{/with}}
+
+     {{#with filteredInternalEvent}}
+    <div class="card" style="width: 45rem;">
+        <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title" id="enventName">{{name}}</h5>
+            <p class="card-text">{{type}}</p>
+            <a href="{{url}}" class="card-text">Buy tickets here</a>
+            <p class="card-text">Date: {{date}}</p>
+            <p class="card-text">{{genre}}</p>
+            <p class="card-text">Min price: {{minPrice}}</p>
+            <p class="card-text">Max price: {{maxPrice}}</p>
+            <p hidden class="card-text" id="lat">{{location.coordinates.[0]}}</p>
+            <p hidden class="card-text" id="lng">{{location.coordinates.[1]}}</p>
+
+
+        </div>
+        <figure id="myMap"></figure>
+    </div>
+    {{/with}}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
