@@ -4,15 +4,16 @@
     <div class="card" style="width: 45rem;">
         <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title" id="enventName">{{name}}</h5>
+            <p id="eventId">{{_id}}</p>
+            <h5 class="card-title" id="eventName">{{name}}</h5>
             <p class="card-text">{{type}}</p>
             <a href="{{url}}" class="card-text">Buy tickets here</a>
             <p class="card-text">Date: {{date}}</p>
             <p class="card-text">{{genre}}</p>
             <p class="card-text">Min price: {{minPrice}}</p>
             <p class="card-text">Max price: {{maxPrice}}</p>
-            <p hidden class="card-text" id="lat">{{location.coordinates.[0]}}</p>
-            <p hidden class="card-text" id="lng">{{location.coordinates.[1]}}</p>
+            <p class="card-text" id="lat">{{location.coordinates.[0]}}</p>
+            <p class="card-text" id="lng">{{location.coordinates.[1]}}</p>
 
             <a href="/events/{{_id}}/edit" class="btn btn-primary">Edit me</a>
 
@@ -29,7 +30,8 @@
     <div class="card" style="width: 45rem;">
         <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title" id="enventName">{{name}}</h5>
+            <p id="eventId">{{_id}}</p>
+            <h5 class="card-title pruebaa" id="eventName">{{name}}</h5>
             <p class="card-text">{{type}}</p>
             <a href="{{url}}" class="card-text">Buy tickets here</a>
             <p class="card-text">Date: {{date}}</p>

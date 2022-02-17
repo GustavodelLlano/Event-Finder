@@ -2,7 +2,7 @@ const router = require("express").Router()
 const { updateOne } = require("../models/Event.model")
 const Event = require("../models/Event.model")
 const User = require('../models/User.model')
-const { isUser, isArtist, isAdmin, isSameUserr } = require("../utils")
+const { isUser, isArtist, isAdmin } = require("../utils")
 const APIHandler = require("../api-handlers/APIHandler")
 const eventsApi = new APIHandler()
 

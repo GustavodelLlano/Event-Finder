@@ -39,10 +39,10 @@ router.post('/login', (req, res, next) => {
         .findOne({ email })
         .then(user => {
             if (!user) {
-                res.render('auth/login-form', { errMsg: 'This username is not registered' })
+                res.render('auth/login-form', { errorMessage: 'This username is not registered' })
                 return
             } else if (!bcrypt.compareSync(userPsw, user.passwordHash)) {
-                res.render('auth/login-form', { errMsg: 'Incorrect password' })
+                res.render('auth/login-form', { errorMessage: 'Incorrect password' })
                 return
             } else {
                 req.session.currentUser = user

@@ -1,9 +1,9 @@
 let map
+const eventId = document.getElementById('eventId').innerHTML
 
 function initMap() {
     drawMap()
-    getEvent()
-
+    getEvent(eventId)
 }
 
 function drawMap() {
@@ -23,19 +23,18 @@ function drawMap() {
     )
 }
 
-function getEvent() {
-    axios.get('/api/maps')
+function getEvent(eventId) {
+    axios.get(`/api/maps/${eventId}`)
         .then(response => printEventMarkers(response.data))
         .catch(err => console.log(err))
-
-
 }
+
 
 
 function printEventMarkers(event) {
 
     const { Marker } = google.maps
-    const eventName = document.getElementById('enventName').innerHTML
+    const eventName = document.getElementById('eventName').innerHTML
 
     event.forEach(element => {
         if (eventName === element.name) {

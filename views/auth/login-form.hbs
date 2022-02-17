@@ -19,8 +19,13 @@
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="userPsw">
                 </div>
-                {{errMsg}}
+                
                 <button type="submit" class="btn btn-primary">Log in!</button>
+                {{#if errorMessage}}
+                <div id="error">
+                    <p>{{errorMessage}}</p>
+                </div>
+                {{/if}}
             </form>
 
         </div>
