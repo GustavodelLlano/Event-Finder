@@ -7,10 +7,54 @@
     margin: 5px 5px;
 }
 
-.card{
+
+
+.navbar {
+    margin-bottom: 50px;
+}
+
+body {
+    background-image: url('../images/concierto-mu-sica-especta-culo-espectadores-rojo-Fondos-de-Pantalla-HD-professor-falken.com_.jpg');
+}
+
+.card {
+    background-color: rgb(49, 49, 49);
+    color: white;
+   
     margin: 10px 0
 }
 
-.navbar{
-    margin-bottom: 20px;
+h1, h2, h3, h4, h5, h6 {
+    color: white;
+}
+
+label {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+body button {
+    border: none;
+    background-color: #212529;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white
+}
+
+.appTitle {
+text-align: center;
+}
+
+body {
+    background-color: #7c8288;
+}
+
+.indexView {
+    justify-content: center;
 }
