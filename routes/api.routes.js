@@ -5,35 +5,35 @@ const eventsApi = new APIHandler()
 
 router.get("/api/maps/:eventId", (req, res, next) => {
 
-    const {eventId} = req.params
-    console.log(eventId.length)
+    const { eventId } = req.params
 
-    if (eventId.length === 24){
-    
-    Event.findById(eventId)
-         .then(event => res.json(event))
-         .catch(err => console.log(err))
-        }
-else{
+    if (eventId.length === 24) {
 
-    const responsePromise = eventsApi.eventById(eventId)
+        Event.findById(eventId)
+            .then(event =>  res.json(event))
+            .catch(err => console.log(err))
 
-    Promise.all([responsePromise])
-    .then(data => {
-        const response = data
-        
-        const apiEvent = response[0].data
-        const filteredApiEvent = {
-            _id: apiEvent.id,
-            location: {
-                type: 'Point',
-                coordinates: [apiEvent._embedded.venues[0].location.longitude, apiEvent._embedded.venues[0].location.latitude]
-            },
-            name: apiEvent.name
-        }
-        res.json(filteredApiEvent)
-    })
-    
-}
+    } else {
+
+        eventsApi
+            .eventById(eventId)
+            .then(apiEvent => {
+
+                console.log(apiEvent.data._embedded.venues)
+
+                const filteredApiEventInfo = {
+                    _id: apiEvent.data.id,
+                    location: {
+                        type: 'Point',
+                        coordinates: [Number(apiEvent.data._embedded.venues[0].location.latitude), Number(apiEvent.data._embedded.venues[0].location.longitude)]
+                    },
+                    name: apiEvent.data.name
+                }
+
+                res.json(filteredApiEventInfo)
+            })
+            .catch(err => console.log(err))
+    }
 })
+
 module.exports = router
