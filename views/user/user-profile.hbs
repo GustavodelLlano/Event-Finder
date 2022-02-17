@@ -1,21 +1,87 @@
 <div class="container">
     <h2>My profile</h2>
+    {{#with user}}
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-6">
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{profileImg}}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{username}}</h5>
                     <p class="card-text">{{description}}</p>
-                    <h6>Wishlist:</h6>
-                    <ul>
-                        {{#each wishEvents}}
-                        <li>{{eventName}}</li>
-                        {{/each}}
-                    </ul>
+
                     <a href="/user/{{_id}}/edit" class="btn btn-primary">Edit my profile</a>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card"></div>
+            <h6>Wishlist:</h6>
+
+            {{#each wishEvents.internalEvents}}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{date}}</p>
+                </div>
+            </div>
+            {{/each}}
+            {{#each wishEvents.apiEvents}}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{date}}</p>
+                </div>
+            </div>
+            {{/each}}
+
+            <h6>Events I've been to:</h6>
+
+            {{#each attendedEvents.internalEvents}}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{date}}</p>
+                </div>
+            </div>
+            {{/each}}
+            {{#each attendedEvents.apiEvents}}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{date}}</p>
+                </div>
+            </div>
+            {{/each}}
+
+            {{#if isArtist}}
+            <h6>My events:</h6>
+
+            {{#each artistEvents.internalEvents}}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{date}}</p>
+                </div>
+            </div>
+            {{/each}}
+            {{#each artistEvents.apiEvents}}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{date}}</p>
+                </div>
+            </div>
+            {{/each}}
+
+            {{/if}}
+        </div>
     </div>
+</div>
+{{/with}}
 </div>
