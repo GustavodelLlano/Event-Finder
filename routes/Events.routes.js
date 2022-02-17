@@ -2,7 +2,7 @@ const router = require("express").Router()
 const { updateOne } = require("../models/Event.model")
 const Event = require("../models/Event.model")
 const User = require('../models/User.model')
-const { isUser, isArtist, isAdmin , isSameUserr} = require("../utils")
+const { isUser, isArtist, isAdmin, isSameUserr } = require("../utils")
 const APIHandler = require("../api-handlers/APIHandler")
 const eventsApi = new APIHandler()
 
@@ -29,8 +29,8 @@ router.post("/events/create", (req, res, next) => {
 
 //update event RENDER
 router.get("/events/:eventId/edit", (req, res, next) => {
-    const {eventId} = req.params
-    
+    const { eventId } = req.params
+
     Event
         .findById(eventId)
         .then(event => res.render("events/event-edit", event))
@@ -55,7 +55,7 @@ router.post("/events/:id/edit", (req, res, next) => {
 
 //Delete
 router.post("/events/:eventId/delete", (req, res, next) => {
-    const {eventId} = req.params
+    const { eventId } = req.params
     Event
         .findByIdAndDelete(eventId)
         .then(() => res.redirect("/events"))
@@ -77,81 +77,84 @@ router.post("/events", (req, res, next) => {
     const internalEventsPromise = Event.find()
     const responsePromise = eventsApi.eventByKeyword(name)
 
-   
+
     Promise.all([internalEventsPromise, responsePromise])
         .then(data => {
-            
-            const [ internalEvents, response ] = data
-            const apiEvents = response.data._embedded.events
 
-            console.log('INTERNAL EVENTS ===>', response.data._embedded.events)
+            const [internalEvents, response] = data
+            const apiEvents = response.data._embedded.events
+            const filteredInternalEvents = internalEvents.filter(event => {
+                return event.name.toLowerCase().includes(name.toLowerCase())
+            })
 
             const formattedApiEvents = apiEvents.map(event => {
                 return {
+                    _id: event.id,
                     name: event.name,
                     type: event.type,
                     url: event.url,
-                    eventImg: event.images[0].AQUI FALT ALGO,
-                    date: 
-                    genre:
-                    minPrice: 
-                    maxPrice:
+                    eventImg: event.images[0].url,
+                    date: event.dates.start.localDate,
+                    genre: event.classifications[0].genre.name,
+                    minPrice: event.priceRanges[0].min,
+                    maxPrice: event.priceRanges[0].max,
                     location: {
                         type: 'Point',
-                        coordinates: [lat: , lng:]
-                    }
+                        coordinates: [event._embedded.venues[0].location.longitude, event._embedded.venues[0].location.latitude]
+                    },
+                    isFromApi: true
                 }
             })
+            const allEvents = filteredInternalEvents.concat(formattedApiEvents)
 
-            // SI LE DAIS EL MISMO FORMATO A LOS EVENTOS DE LA API QUE A LOS VUESTROS
-            // LUEGO PODEIS CONCATENAR AMBOS ARRAYS EN UNO SOLO QUE SE LLAME EVENTS (POR EJEMPLO)
-            // Y PASARLE ESO A LA VISTA PRECIOSO
-            res.render("events/event-list", { internalEvents, apiEvents })
+            res.render("events/event-list", { allEvents })
+
         })
-
-    // Event
-    //     .find()
-    //     .then(allEvents => {
-    //         const filteredEvents = allEvents.filter(event => {
-    //             return event.name.toLowerCase().includes(name)
-    //         })
-    //         res.render("events/event-list", { filteredEvents })
-    //     })
-    //     .catch(err => next(err))
-
-    // eventsApi
-    //     .eventByKeyword(name)
+        .catch(err => next(err))
 })
 
 //event details render
-router.get("/events/:id/details",(req, res, next) =>{
+router.get("/events/:id/details", (req, res, next) => {
     const id = req.params.id
 
-    Event
-    .findById(id)
-    .then(event =>  res.render("events/event-details", {event}))
-    .catch(err => next(err))
+    if (req.query.api) {
+        const responsePromise = eventsApi.eventById(id)
+        Promise.all([responsePromise])
+            .then(data => {
+                const response = data
+                const apiEvent = response[0].data
+                const filteredInternalEvent = {
+                    _id: apiEvent.id,
+                    name: apiEvent.name,
+                    type: apiEvent.type,
+                    url: apiEvent.url,
+                    eventImg: apiEvent.images[0].url,
+                    date: apiEvent.dates.start.localDate,
+                    genre: apiEvent.classifications[0].genre.name,
+                    minPrice: apiEvent.priceRanges[0].min,
+                    maxPrice: apiEvent.priceRanges[0].max,
+                    location: {
+                        type: 'Point',
+                        coordinates: [apiEvent._embedded.venues[0].location.longitude, apiEvent._embedded.venues[0].location.latitude]
+                    },
+                    isFromApi: true
+                }
 
-    
+                res.render("events/event-details", { filteredInternalEvent })
+
+            })
+            .catch(err => next(err))
+
+
+    } else {
+        Event
+            .findById(id)
+            .then(event => res.render("events/event-details", { event }))
+            .catch(err => next(err))
+    }
+
+
 })
 
-//add event to whislist
-
-router.post("/events/:id/add", (req, res, next) => {
-    const id = req.params.id
-    
-    Event   
-    .findById(id)
-    .then(event =>{
-       
-         User
-         .findByIdAndUpdate(
-             {_id: req.session.currentUser._id},
-             {$push: {internalEvents: event._id}},
-             {new: true}
-         )
-         .then(user => console.log( _id))
-    })
-})
 
 module.exports = router

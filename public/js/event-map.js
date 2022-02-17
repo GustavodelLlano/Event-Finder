@@ -17,7 +17,7 @@ function drawMap() {
         document.getElementById('myMap'),
         {
             zoom: 10,
-            center: { lat: lat, lng: lng },
+            center: { lat: 4, lng: -3 },
 
         }
     )
