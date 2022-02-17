@@ -66,7 +66,7 @@ router.post("/events/:eventId/delete", (req, res, next) => {
 
 //event search form render
 router.get("/events", (req, res, next) => {
-    res.render("events/event-search")
+    res.render("events/event-search", { user: req.session.currentUser, isArtist: isArtist(req.session.currentUser) }) // NO FUNCHIONA 
 })
 
 //event search handle

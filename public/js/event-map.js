@@ -9,15 +9,14 @@ function initMap() {
 function drawMap() {
 
     const { Map } = google.maps
-    const lat = document.getElementById('lat')
-    const lng = document.getElementById('lng')
-
+    const myLat = document.getElementById('lat').innerText
+    const myLng = document.getElementById('lng').innerText
 
     map = new Map(
         document.getElementById('myMap'),
         {
-            zoom: 10,
-            center: { lat: 4, lng: -3 },
+            zoom: 6,
+            center: { lat: 40.449316977382615, lng: - 3.699531260450334 },
 
         }
     )
@@ -51,3 +50,5 @@ function printEventMarkers(event) {
 
     });
 }
+
+

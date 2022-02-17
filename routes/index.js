@@ -5,11 +5,11 @@ module.exports = app => {
   app.use("/", indexRouter)
 
   // User routes
-  const userRouter = require("./User.routes")
+  const userRouter = require("./user.routes")
   app.use("/", userRouter)
 
   // Event routes
-  const eventRouter = require("./Events.routes")
+  const eventRouter = require("./events.routes")
   app.use("/", eventRouter)
 
   // Auth routes
