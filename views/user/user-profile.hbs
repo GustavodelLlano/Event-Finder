@@ -8,16 +8,15 @@
                 <div class="card-body">
                     <h5 class="card-title">{{username}}</h5>
                     <p class="card-text">{{description}}</p>
-
-                    <a href="/user/{{_id}}/edit" class="btn btn-primary">Edit my profile</a>
+                    <a href="/user/{{_id}}/edit" class="btn btn-dark">Edit my profile</a>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card"></div>
             <h6>Wishlist:</h6>
-
-            {{#each wishEvents.internalEvents}}
+            {{#with wishEvents}}
+            {{#each internalEvents}}
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
                 <div class="card-body">
@@ -26,7 +25,7 @@
                 </div>
             </div>
             {{/each}}
-            {{#each wishEvents.apiEvents}}
+            {{#each apiEvents}}
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{eventImg}}" alt="Card image cap">
                 <div class="card-body">
@@ -35,7 +34,7 @@
                 </div>
             </div>
             {{/each}}
-
+            {{/with}}
             <h6>Events I've been to:</h6>
 
             {{#each attendedEvents.internalEvents}}

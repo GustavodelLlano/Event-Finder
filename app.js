@@ -11,18 +11,14 @@ const app = express();
 require("./config")(app);
 require('./config/session.config')(app)
 
-
-const projectName = "myapp";
+const projectName = "Event-finder-revolution-2_";
 
 app.locals.appTitle = projectName
 app.locals.mapsKey = process.env.MAPKEY
 app.locals.ticketKey = process.env.TICKETKEY
 
-
-
 require("./routes")(app)
-
 
 require("./error-handling")(app);
 
-module.exports = app;
+module.exports = app

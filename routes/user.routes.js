@@ -13,7 +13,14 @@ router.get('/user/:userId', isLoggedIn, (req, res, next) => {
 
     User
         .findById(userId)
-        .then(user => res.render('user/user-profile', { user, isArtist: isArtist(user) }))  // NO FUNCHIONA
+        .populate('wishEvents.internalEvents')
+        .populate('attendedEvents.internalEvents')
+        .populate('artistEvents.internalEvents')
+
+        
+        .then(user => {
+            res.render('user/user-profile', { user, isArtist: isArtist(user) })
+          })  
         .catch(err => next(err))
 })
 
@@ -110,6 +117,7 @@ router.post('/user/:eventId/add-event', isLoggedIn, (req, res, next) => {
                         },
                         isFromApi: true
                     }
+                    
                     User
                         .findByIdAndUpdate(userId, { $push: { 'wishEvents.apiEvents': filteredInternalEvent._id } }, { new: true })
                         .then(user => {
@@ -135,9 +143,6 @@ router.post('/user/:eventId/add-event', isLoggedIn, (req, res, next) => {
             res.redirect(`/user/${userId}`)
         }
     }
-
-
-
 })
 
 // Add to attendedEvents
@@ -255,9 +260,6 @@ router.post('/user/:eventId/artist-event', isLoggedIn, (req, res, next) => {
             res.redirect(`/user/${userId}`)
         }
     }
-
-
-
 })
 
 
@@ -279,9 +281,7 @@ router.post("/users", (req, res, next) => {
     User
         .find()
         .then(allUsers => {
-            const filteredUsers = allUsers.filter(user => {
-                return user.username.toLowerCase().includes(username)
-            })
+            const filteredUsers = allUsers.filter(user => user.username.toLowerCase().includes(username.toLowerCase()))
             res.render("user/user-list", { filteredUsers })
         })
         .catch(err => next(err))

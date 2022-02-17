@@ -15,7 +15,7 @@
             <p class="card-text" id="lat">{{location.coordinates.[0]}}</p>
             <p class="card-text" id="lng">{{location.coordinates.[1]}}</p>
 
-            <a href="/events/{{_id}}/edit" class="btn btn-primary">Edit me</a>
+            <a href="/events/{{_id}}/edit" class="btn btn-dark">Edit me</a>
 
             <form action="/events/{{_id}}/delete" method="post">
                 <button class="btn btn-danger">Delete event</button>
@@ -49,5 +49,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/styles-map.js"></script>
 <script src="/js/event-map.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{mapsKey}}&callback=initMap"></script>

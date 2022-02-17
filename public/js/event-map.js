@@ -19,13 +19,11 @@ function drawMap() {
             map = new Map(
                 document.getElementById('myMap'),
                 {
-                    zoom: 10,
+                    zoom: 12,
                     center: { lat: lat, lng: lng },
-
+                    styles: mapStyles.crazyMap
                 })
         })
-
-
 }
 
 function getEvent(eventId) {

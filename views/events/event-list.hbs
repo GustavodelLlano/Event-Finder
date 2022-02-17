@@ -10,38 +10,38 @@
                     <p class="card-text">Date: {{date}}</p>
 
                     {{#if isFromApi}}
-                    <a href="/events/{{_id}}/details?api=true" class="btn btn-primary">Event details</a>
+                    <a href="/events/{{_id}}/details?api=true" class="btn btn-dark">Event details</a>
                     {{else}}
-                    <a href="/events/{{_id}}/details" class="btn btn-primary">Event details</a>
+                    <a href="/events/{{_id}}/details" class="btn btn-dark">Event details</a>
                     {{/if}}
 
                     {{#if isFromApi}}
                     <form action="/user/{{_id}}/add-event?api=true" method="post">
-                        <button class="btn btn-primary">Add to my event wishlist</button>
+                        <button class="btn btn-dark">Add to my event wishlist</button>
                     </form>
                     {{else}}
                     <form action="/user/{{_id}}/add-event" method="post">
-                        <button class="btn btn-primary">Add to my event wishlist</button>
+                        <button class="btn btn-dark">Add to my event wishlist</button>
                     </form>
                     {{/if}}
 
                     {{#if isFromApi}}
                     <form action="/user/{{_id}}/add-past-event?api=true" method="post">
-                        <button class="btn btn-primary">I was there!</button>
+                        <button class="btn btn-dark">I was there!</button>
                     </form>
                     {{else}}
                     <form action="/user/{{_id}}/add-past-event" method="post">
-                        <button class="btn btn-primary">I was there!</button>
+                        <button class="btn btn-dark">I was there!</button>
                     </form>
                     {{/if}}
                     {{#if isArtist}}
                     {{#if isFromApi}}
                     <form action="/user/{{_id}}/artist-event?api=true" method="post">
-                        <button class="btn btn-primary">This is my event</button>
+                        <button class="btn btn-dark">This is my event</button>
                     </form>
                     {{else}}
                     <form action="/user/{{_id}}/artist-event" method="post">
-                        <button class="btn btn-primary">This is my event</button>
+                        <button class="btn btn-dark">This is my event</button>
                     </form>
                     {{/if}}
                     {{/if}}

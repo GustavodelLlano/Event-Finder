@@ -3,7 +3,7 @@ const Event = require("../models/Event.model")
 const APIHandler = require("../api-handlers/APIHandler")
 const eventsApi = new APIHandler()
 
-router.get("/api/maps/:eventId", (req, res, next) => {
+router.get("/maps/:eventId", (req, res, next) => {
 
     const { eventId } = req.params
 
@@ -18,9 +18,6 @@ router.get("/api/maps/:eventId", (req, res, next) => {
         eventsApi
             .eventById(eventId)
             .then(apiEvent => {
-
-                console.log(apiEvent.data._embedded.venues)
-
                 const filteredApiEventInfo = {
                     _id: apiEvent.data.id,
                     location: {

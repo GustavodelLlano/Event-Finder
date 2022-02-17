@@ -10,7 +10,7 @@ module.exports = app => {
 
   // Event routes
   const eventRouter = require("./events.routes")
-  app.use("/", eventRouter)
+  app.use("/events", eventRouter)
 
   // Auth routes
   const authRouter = require("./auth.routes")
@@ -18,5 +18,5 @@ module.exports = app => {
 
   // Map routes
   const apiRouter = require('./api.routes')
-  app.use('/', apiRouter)
+  app.use('/api', apiRouter)
 }

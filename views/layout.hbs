@@ -22,7 +22,7 @@
          </button>
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+{{#if user}}
                <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/user/{{myUser._id}}">Profile</a>
                </li>
@@ -30,7 +30,7 @@
                <li class="nav-item">
                   <a class="nav-link active" href="/user/{{myUser._id}}/friends">My friends</a>
                </li>
-
+{{/if}}
                <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/events/create">Create event</a>
                </li>
@@ -43,6 +43,13 @@
                   <a class="nav-link active" aria-current="page" href="/users">Find users</a>
                </li>
 
+               {{#if user}}
+               <li class="nav-item">
+                  <form action="/logout" method="POST">
+                     <button class="nav-link btn btn-danger">Log out</button>
+                  </form>
+               </li>
+               {{else}}
                <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/signup">Sign up</a>
                </li>
@@ -50,13 +57,7 @@
                <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/login">Log in</a>
                </li>
-
-               <li class="nav-item">
-                  <form action="/logout" method="POST">
-                     <button class="nav-link">Log out</button>
-                  </form>
-               </li>
-
+               {{/if }}
 
             </ul>
             </li>

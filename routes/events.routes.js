@@ -8,12 +8,12 @@ const eventsApi = new APIHandler()
 
 
 //create event RENDER
-router.get("/events/create", (req, res, next) => {
-
+router.get("/create", (req, res, next) => {
     res.render("events/event-create")
 })
+
 //create event HANDLE
-router.post("/events/create", (req, res, next) => {
+router.post("/create", (req, res, next) => {
     const { name, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
@@ -28,7 +28,7 @@ router.post("/events/create", (req, res, next) => {
 })
 
 //update event RENDER
-router.get("/events/:eventId/edit", (req, res, next) => {
+router.get("/:eventId/edit", (req, res, next) => {
     const { eventId } = req.params
 
     Event
@@ -38,7 +38,7 @@ router.get("/events/:eventId/edit", (req, res, next) => {
 })
 
 //HANDLE
-router.post("/events/:id/edit", (req, res, next) => {
+router.post("/:id/edit", (req, res, next) => {
     const { name, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
@@ -54,7 +54,7 @@ router.post("/events/:id/edit", (req, res, next) => {
 })
 
 //Delete
-router.post("/events/:eventId/delete", (req, res, next) => {
+router.post("/:eventId/delete", (req, res, next) => {
     const { eventId } = req.params
     Event
         .findByIdAndDelete(eventId)
@@ -65,12 +65,12 @@ router.post("/events/:eventId/delete", (req, res, next) => {
 
 
 //event search form render
-router.get("/events", (req, res, next) => {
+router.get("/", (req, res, next) => {
     res.render("events/event-search", { user: req.session.currentUser, isArtist: isArtist(req.session.currentUser) }) // NO FUNCHIONA 
 })
 
 //event search handle
-router.post("/events", (req, res, next) => {
+router.post("/", (req, res, next) => {
 
     const { name } = req.body
 
@@ -107,14 +107,14 @@ router.post("/events", (req, res, next) => {
             })
             const allEvents = filteredInternalEvents.concat(formattedApiEvents)
 
-            res.render("events/event-list", { allEvents })
+            res.render("events/event-list", { allEvents, isArtist: isArtist(req.session.currentUser), user: req.session.currentUser})
 
         })
         .catch(err => next(err))
 })
 
 //event details render
-router.get("/events/:id/details", (req, res, next) => {
+router.get("/:id/details", (req, res, next) => {
     const id = req.params.id
 
     if (req.query.api) {
@@ -144,8 +144,6 @@ router.get("/events/:id/details", (req, res, next) => {
 
             })
             .catch(err => next(err))
-
-
     } else {
         Event
             .findById(id)
