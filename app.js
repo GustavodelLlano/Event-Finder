@@ -12,7 +12,7 @@ require("./config")(app);
 require('./config/session.config')(app)
 
 
-const projectName = "myapp";
+const projectName = "Event-finder-revolution-2_";
 
 app.locals.appTitle = projectName
 app.locals.mapsKey = process.env.MAPKEY

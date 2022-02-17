@@ -2,18 +2,19 @@ const router = require("express").Router()
 const { updateOne } = require("../models/Event.model")
 const Event = require("../models/Event.model")
 const User = require('../models/User.model')
-const { isUser, isArtist, isAdmin } = require("../utils")
+const { isLoggedIn, checkRole, isSameUser } = require("../middleware/route-guard")
+const { isUser, isArtist, isAdmin, isSameUserr } = require("../utils")
 const APIHandler = require("../api-handlers/APIHandler")
 const eventsApi = new APIHandler()
 
 
 //create event RENDER
-router.get("/events/create", (req, res, next) => {
+router.get("/events/create", checkRole('ARTIST', 'ADMIN'), (req, res, next) => {
 
     res.render("events/event-create")
 })
 //create event HANDLE
-router.post("/events/create", (req, res, next) => {
+router.post("/events/create", checkRole('ARTIST', 'ADMIN'), (req, res, next) => {
     const { name, type, url, eventImg, date, genre, minPrice, maxPrice, lat, lng } = req.body
 
     const location = {
@@ -28,7 +29,7 @@ router.post("/events/create", (req, res, next) => {
 })
 
 //update event RENDER
-router.get("/events/:eventId/edit", (req, res, next) => {
+router.get("/events/:eventId/edit", checkRole('ARTIST', 'ADMIN'), (req, res, next) => {
     const { eventId } = req.params
 
     Event
@@ -54,7 +55,7 @@ router.post("/events/:id/edit", (req, res, next) => {
 })
 
 //Delete
-router.post("/events/:eventId/delete", (req, res, next) => {
+router.post("/events/:eventId/delete", checkRole('ARTIST', 'ADMIN'), (req, res, next) => {
     const { eventId } = req.params
     Event
         .findByIdAndDelete(eventId)
@@ -66,7 +67,7 @@ router.post("/events/:eventId/delete", (req, res, next) => {
 
 //event search form render
 router.get("/events", (req, res, next) => {
-    res.render("events/event-search", { user: req.session.currentUser, isArtist: isArtist(req.session.currentUser) }) // NO FUNCHIONA 
+    res.render("events/event-search", { user: req.session.currentUser, isArtist: isArtist(req.session.currentUser) })
 })
 
 //event search handle

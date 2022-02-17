@@ -4,6 +4,7 @@ const { isLoggedIn, checkRole, isSameUser } = require("../middleware/route-guard
 const { isUser, isArtist, isAdmin, isSameUserr } = require("../utils")
 const { updateOne, findByIdAndUpdate } = require("../models/User.model")
 const APIHandler = require("../api-handlers/APIHandler")
+const { default: axios } = require("axios")
 const eventsApi = new APIHandler()
 
 // Each user route
@@ -13,9 +14,15 @@ router.get('/user/:userId', isLoggedIn, (req, res, next) => {
 
     User
         .findById(userId)
-        .then(user => res.render('user/user-profile', { user, isArtist: isArtist(user) }))  // NO FUNCHIONA
+        .populate('wishEvents.internalEvents')
+        .populate('attendedEvents.internalEvents')
+        .populate('artistEvents.internalEvents')
+        .then(user => {
+            res.render('user/user-profile', { user, isArtist: isArtist(user) })
+        })
         .catch(err => next(err))
 })
+
 
 // User edit form render
 router.get('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
@@ -59,7 +66,7 @@ router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
 })
 
 // Add to my friends 
-router.post('/user/:friendId/add-friend', isLoggedIn, (req, res, next) => {
+router.post('/user/:friendId/add-friend', isLoggedIn, isSameUser, (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
@@ -81,7 +88,7 @@ router.post('/user/:friendId/add-friend', isLoggedIn, (req, res, next) => {
 })
 
 // Add to wishEvents 
-router.post('/user/:eventId/add-event', isLoggedIn, (req, res, next) => {
+router.post('/user/:eventId/add-event', isLoggedIn, isSameUser, (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
@@ -141,7 +148,7 @@ router.post('/user/:eventId/add-event', isLoggedIn, (req, res, next) => {
 })
 
 // Add to attendedEvents
-router.post('/user/:eventId/add-past-event', isLoggedIn, (req, res, next) => {
+router.post('/user/:eventId/add-past-event', isLoggedIn, isSameUser, (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
@@ -201,7 +208,7 @@ router.post('/user/:eventId/add-past-event', isLoggedIn, (req, res, next) => {
 })
 
 // Add to artistEvents
-router.post('/user/:eventId/artist-event', isLoggedIn, (req, res, next) => {
+router.post('/user/:eventId/artist-event', isLoggedIn, isSameUser, checkRole('ARTIST'), (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
@@ -259,9 +266,6 @@ router.post('/user/:eventId/artist-event', isLoggedIn, (req, res, next) => {
 
 
 })
-
-
-
 
 
 
