@@ -30,7 +30,7 @@
                 </div>
                 
                 
-
+{{#if isAdmin}}
                 <div class="mb-3">
                     <label for="roleInput" class="form-label">Change role</label>
                     <select name="role">
@@ -38,7 +38,7 @@
                         <option value="ARTIST">Artist</option>
                     </select>
                 </div>
-
+{{/if}}
                 <button type="submit" class="btn btn-dark">Update!</button>
             </form>
 
