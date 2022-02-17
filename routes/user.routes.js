@@ -4,7 +4,6 @@ const { isLoggedIn, checkRole, isSameUser } = require("../middleware/route-guard
 const { isUser, isArtist, isAdmin, isSameUserr } = require("../utils")
 const { updateOne, findByIdAndUpdate } = require("../models/User.model")
 const APIHandler = require("../api-handlers/APIHandler")
-const { default: axios } = require("axios")
 const eventsApi = new APIHandler()
 
 // Each user route
@@ -32,7 +31,7 @@ router.get('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
     User
         .findById(userId)
         .then(user => {
-            res.render('user/user-edit', user)
+            res.render('user/user-edit', {user, isAdmin: isAdmin(req.session.currentUser) }) 
         })
         .catch(err => next(err))
 })
@@ -66,7 +65,7 @@ router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
 })
 
 // Add to my friends 
-router.post('/user/:friendId/add-friend', isLoggedIn, isSameUser, (req, res, next) => {
+router.post('/user/:friendId/add-friend', isLoggedIn,  (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
