@@ -13,11 +13,50 @@ router.get('/user/:userId', isLoggedIn, (req, res, next) => {
 
     User
         .findById(userId)
-        .populate('wishEvents.internalEvents')
-        .populate('attendedEvents.internalEvents')
-        .populate('artistEvents.internalEvents')
+        .populate('wishEvents.internalEvents attendedEvents.internalEvents artistEvents.internalEvents')
         .then(user => {
-            res.render('user/user-profile', { user, isArtist: isArtist(user) })
+
+            const wishApiEventsPromises = Promise.all(user.wishEvents.apiEvents.map(event => eventsApi.eventById(event)))
+            const attendedApiEventsPromises = Promise.all(user.attendedEvents.apiEvents.map(event => eventsApi.eventById(event)))
+            const artistEventsPromises = Promise.all(user.artistEvents.apiEvents.map(event => eventsApi.eventById(event)))
+
+            Promise.all([wishApiEventsPromises, attendedApiEventsPromises, artistEventsPromises])
+                .then(response => {
+
+                    const [wishApiEventsAxiosArr, attendedApiEventsAxiosArr, artistEventsAxiosArr] = response
+
+                    const wishApiEvents = wishApiEventsAxiosArr.map(event => {
+                        return {
+                            eventImg: event.data.images[0].url,
+                            name: event.data.name,
+                            date: event.data.dates.start.localDate
+                        }
+                    })
+
+                    const attendedApiEvents = attendedApiEventsAxiosArr.map(event => {
+                        return {
+                            eventImg: event.data.images[0].url,
+                            name: event.data.name,
+                            date: event.data.dates.start.localDate
+                        }
+                    })
+
+                    const artistApiEvents = artistEventsAxiosArr.map(event => {
+                        return {
+                            eventImg: event.data.images[0].url,
+                            name: event.data.name,
+                            date: event.data.dates.start.localDate
+                        }
+                    })
+
+                    const userCopy = JSON.parse(JSON.stringify(user))
+                    userCopy.wishEvents.apiEvents = wishApiEvents
+                    userCopy.attendedEvents.apiEvents = attendedApiEvents
+                    userCopy.artistEvents.apiEvents = artistApiEvents
+
+                    res.render('user/user-profile', { userCopy, isArtist: isArtist(userCopy) })
+                })
+                .catch(err => next(err))
         })
         .catch(err => next(err))
 })
@@ -116,7 +155,7 @@ router.post('/user/:eventId/add-event', isLoggedIn, isSameUser, (req, res, next)
                         },
                         isFromApi: true
                     }
-                    
+
                     User
                         .findByIdAndUpdate(userId, { $push: { 'wishEvents.apiEvents': filteredInternalEvent._id } }, { new: true })
                         .then(user => {
