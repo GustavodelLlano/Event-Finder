@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const User = require('../models/User.model')
 const { isLoggedIn, checkRole, isSameUser } = require("../middleware/route-guard")
-const { isUser, isArtist, isAdmin, isSameUserr } = require("../utils")
+const { isUser, isArtist, isAdmin} = require("../utils")
 const { updateOne, findByIdAndUpdate } = require("../models/User.model")
 const APIHandler = require("../api-handlers/APIHandler")
 const eventsApi = new APIHandler()
@@ -126,7 +126,7 @@ router.post('/user/:friendId/add-friend', isLoggedIn,  (req, res, next) => {
 })
 
 // Add to wishEvents 
-router.post('/user/:eventId/add-event', isLoggedIn, isSameUser, (req, res, next) => {
+router.post('/user/:eventId/add-event', isLoggedIn, (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
@@ -184,7 +184,7 @@ router.post('/user/:eventId/add-event', isLoggedIn, isSameUser, (req, res, next)
 })
 
 // Add to attendedEvents
-router.post('/user/:eventId/add-past-event', isLoggedIn, isSameUser, (req, res, next) => {
+router.post('/user/:eventId/add-past-event', isLoggedIn,  (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
@@ -244,7 +244,7 @@ router.post('/user/:eventId/add-past-event', isLoggedIn, isSameUser, (req, res, 
 })
 
 // Add to artistEvents
-router.post('/user/:eventId/artist-event', isLoggedIn, isSameUser, checkRole('ARTIST'), (req, res, next) => {
+router.post('/user/:eventId/artist-event', isLoggedIn,  checkRole('ARTIST'), (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id

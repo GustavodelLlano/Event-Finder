@@ -12,11 +12,11 @@ const checkRole = (...admitedRoles) => (req, res, next) => {
 }
 
 const isSameUser = (req, res, next) => {
-    if (req.session.currentUser._id === req.params.userId || req.session.currentUser.role === 'ADMIN') {
+    if (req.session.currentUser._id === req.params.userId || req.session.currentUser.role === 'ADMIN' ) {
         next()
     } else {
         res.render("auth/login-form", {
-            errorMessage: "Unauthorized"
+            errorMessage: "Unauthorized puto"
         })
     }
 
