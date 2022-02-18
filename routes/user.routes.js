@@ -54,7 +54,7 @@ router.get('/user/:userId', isLoggedIn, (req, res, next) => {
                     userCopy.attendedEvents.apiEvents = attendedApiEvents
                     userCopy.artistEvents.apiEvents = artistApiEvents
 
-                    res.render('user/user-profile', { userCopy, isArtist: isArtist(userCopy) })
+                    res.render('user/user-profile', { user, userCopy, isArtist: isArtist(userCopy) })
                 })
                 .catch(err => next(err))
         })
@@ -70,7 +70,7 @@ router.get('/user/:userId/edit', isLoggedIn, isSameUser, (req, res, next) => {
     User
         .findById(userId)
         .then(user => {
-            res.render('user/user-edit', {user, isAdmin: isAdmin(req.session.currentUser) }) 
+            res.render('user/user-edit', { user, isAdmin: isAdmin(req.session.currentUser) })
         })
         .catch(err => next(err))
 })
@@ -104,7 +104,7 @@ router.get('/user/:userId/friends', isLoggedIn, (req, res, next) => {
 })
 
 // Add to my friends 
-router.post('/user/:friendId/add-friend', isLoggedIn,  (req, res, next) => {
+router.post('/user/:friendId/add-friend', isLoggedIn, (req, res, next) => {
 
     const myUser = req.session.currentUser
     const userId = req.session.currentUser._id
@@ -173,7 +173,7 @@ router.post('/user/:eventId/add-event', isLoggedIn, (req, res, next) => {
             User
                 .findByIdAndUpdate(userId, { $push: { 'wishEvents.internalEvents': eventId } }, { new: true })
                 .then(user => {
-                    user = req.session.currentUser
+                    req.session.currentUser = user
                     res.redirect(`/user/${userId}`)
                 })
                 .catch(err => next(err))
@@ -230,7 +230,7 @@ router.post('/user/:eventId/add-past-event', isLoggedIn,  (req, res, next) => {
             User
                 .findByIdAndUpdate(userId, { $push: { 'attendedEvents.internalEvents': eventId } }, { new: true })
                 .then(user => {
-                    user = req.session.currentUser
+                    req.session.currentUser = user
                     res.redirect(`/user/${userId}`)
                 })
                 .catch(err => next(err))
@@ -290,7 +290,7 @@ router.post('/user/:eventId/artist-event', isLoggedIn,  checkRole('ARTIST'), (re
             User
                 .findByIdAndUpdate(userId, { $push: { 'artistEvents.internalEvents': eventId } }, { new: true })
                 .then(user => {
-                    user = req.session.currentUser
+                    req.session.currentUser = user
                     res.redirect(`/user/${userId}`)
                 })
                 .catch(err => next(err))
