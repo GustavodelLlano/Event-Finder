@@ -1,5 +1,8 @@
 # Project module 2
 
+Event finder web aplication using Ticketmaster API and our own CRUD of events working together, also using Google Maps API.
+Proyect developed in back-end, rendering with handlebars.
+
 Endpoints table 
 
 
